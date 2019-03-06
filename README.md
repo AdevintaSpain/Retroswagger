@@ -1,6 +1,6 @@
 <!--
   Title: Retroswagger - Kotlin code generator for Retrofit2 and RxJava2 based on Swagger
-  Description: Retroswagger is a library that generates the code for Retrofit based on a Swagger endpoint.
+  Description: Retroswagger is a library that generates kotlin code for Retrofit 2 based on a Swagger endpoint. Includes an Annotation Processor to export and write the code.
   Author: SchibstedSpain
   -->
 
@@ -47,9 +47,9 @@ apply plugin: "kotlin-kapt"
 ```
 
 ```groovy
-kapt "com.schibsted.spain:retroswagger:0.0.9"
-annotationProcessor "com.schibsted.spain:retroswagger:0.0.9"
-implementation "com.schibsted.spain:retroswagger:0.0.9"
+kapt "com.schibsted.spain:retroswagger:1.0.0"
+annotationProcessor "com.schibsted.spain:retroswagger:1.0.0"
+implementation "com.schibsted.spain:retroswagger:1.0.0"
 ```
 
 In order for your project recognizes the generated code you will need to include it into your sources path, like this:
