@@ -4,7 +4,7 @@
   Author: SchibstedSpain
   -->
 
-<img src="https://github.schibsted.io/scmspain/android-common--protein-plugin-intelliJ/raw/master/media/protein_logo.png" align="left" height="128px" />
+<img src="https://github.com/SchibstedSpain/Retroswagger/raw/master/media/retroswagger_logo.png" align="left" height="128px" />
 <img align="left" width="0" height="128px" hspace="10" />
 
 <div style="display:block; height: 168px;">
