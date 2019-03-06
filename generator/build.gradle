@@ -1,0 +1,161 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'twitter-gradle-plugin'
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+ext.versionProps = new Properties()
+versionProps.load(new FileInputStream(rootDir.absolutePath + "/version.properties"))
+
+def versionMajor = Integer.parseInt(versionProps['MAJOR'] as String)
+def versionMinor = Integer.parseInt(versionProps['MINOR'] as String)
+def versionPatch = Integer.parseInt(versionProps['PATCH'] as String)
+def buildVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
+
+group 'com.schibsted.spain'
+version buildVersion
+
+detekt {
+    input = files("$projectDir/src/main/java")
+    config = files("$rootDir/config/detekt.yml")
+    reports {
+        xml {
+            enabled = true
+            destination = file("$projectDir/build/reports/detekt/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("$projectDir/build/reports/detekt/detekt.html")
+        }
+    }
+    filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+}
+
+ktlint {
+    reporters = ["PLAIN", "CHECKSTYLE"]
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    compile 'com.squareup.okhttp3:okhttp:3.11.0'
+
+    compile 'com.squareup:kotlinpoet:1.0.0-RC2'
+    compile "io.reactivex.rxjava2:rxjava:2.2.2"
+    compile 'com.squareup.retrofit2:retrofit:2.4.0'
+
+    def jacksonVersion = '2.8.4'
+    compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+
+    compile 'com.google.code.gson:gson:2.8.5'
+
+    def swaggerVersion = '1.5.16'
+    compile "io.swagger:swagger-annotations:$swaggerVersion"
+    compile "io.swagger:swagger-core:$swaggerVersion"
+    compile "io.swagger:swagger-models:$swaggerVersion"
+    compile "io.swagger:swagger-parser:1.0.33"
+
+    compile 'commons-io:commons-io:2.5'
+
+    compile "com.google.auto.service:auto-service:1.0-rc2"
+    kapt "com.google.auto.service:auto-service:1.0-rc2"
+    compile "org.jetbrains.kotlin:kotlin-reflect:1.3.21"
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+publishing {
+    publications {
+        Production(MavenPublication) {
+            groupId group
+            artifactId 'retroswagger'
+            version "${versionMajor}.${versionMinor}.${versionPatch}"
+
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                configurations.implementation.allDependencies.each {
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+
+                // List all "compile" dependencies (for old Gradle)
+                configurations.compile.getDependencies().each { dep -> addDependency(dep, "compile") }
+                // List all "api" dependencies (for new Gradle) as "compile" dependencies
+                configurations.api.getDependencies().each { dep -> addDependency(dep, "compile") }
+                // List all "implementation" dependencies (for new Gradle) as "runtime" dependencies
+                configurations.implementation.getAllDependencies().each { dep ->
+                    try {
+                        addDependency(dep, "runtime")
+                    } catch(Exception ignored) {
+                    }
+                }
+            }
+
+            artifact("$buildDir/libs/${project.getName()}-${versionMajor}.${versionMinor}.${versionPatch}.jar")
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('BINTRAY_USER') ? project.property('BINTRAY_USER') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('BINTRAY_KEY') ? project.property('BINTRAY_KEY') : System.getenv('BINTRAY_KEY')
+    publications = ['Production']
+    configurations = ['archives']
+
+    pkg {
+        repo = 'maven'
+        name = 'retroswagger'
+        userOrg = 'schibstedspain'
+        description = "A library that generates kotlin code for Retrofit 2 based on a Swagger endpoint. Includes an Annotation Processor to export and write the code."
+        publish = true
+        dryRun = false
+        publicDownloadNumbers = true
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/SchibstedSpain/Retroswagger.git'
+        version {
+            name = "${versionMajor}.${versionMinor}.${versionPatch}"
+            desc = "A library that generates kotlin code for Retrofit 2 based on a Swagger endpoint. Includes an Annotation Processor to export and write the code."
+            released = new Date()
+            vcsTag = "${versionMajor}.${versionMinor}.${versionPatch}"
+        }
+    }
+}
+
+twitterPlugin {
+    consumerKey = System.getenv()['TWITTER_API_KEY']
+    consumerSecret = System.getenv()['TWITTER_API_SECRET']
+    accessToken = System.getenv()['TWITTER_ACCESS_TOKEN']
+    accessTokenSecret = System.getenv()['TWITTER_ACCESS_TOKEN_SECRET']
+    message = "New Retroswagger version ${versionMajor}.${versionMinor}.${versionPatch} available for download. Check out the details at https://github.com/SchibstedSpain/Retroswagger @SchibstedEng #Kotlin #library #Android #AndroidDev #CodeGeneration #kotlinpoet #swagger"
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}

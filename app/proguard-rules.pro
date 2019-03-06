@@ -1,0 +1,9 @@
+-dontwarn org.yaml.snakeyaml.**
+-dontwarn org.slf4j.**
+-dontwarn io.swagger.**
+-dontwarn com.google.common.**
+-dontwarn com.google.auto.**
+-dontwarn javax.xml.datatype.**
+-dontwarn com.fasterxml.jackson.**
+-dontwarn com.squareup.kotlinpoet.**
+-dontwarn com.schibsted.spain.**

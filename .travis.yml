@@ -1,0 +1,70 @@
+language: android
+jdk:
+  - oraclejdk8
+
+branches:
+  only:
+    - master
+    - /^v.*$/
+
+env:
+  global:
+    - TERM=dumb
+    - DX_HEAP_SIZE=1536
+    - ANDROID_API=28
+    - EMULATOR_API=24
+    - ANDROID_BUILD_TOOLS=28.0.1
+    - ADB_INSTALL_TIMEOUT=5
+
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.gradle/native
+    - $HOME/.gradle/daemon/
+    - $HOME/.android/build-cache/
+
+android:
+  components:
+  - tools
+  - tools
+  - platform-tools
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$ANDROID_API
+  - android-$EMULATOR_API
+  - extra
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-$ANDROID_API
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+before_install:
+  - "export TRAVIS_LAST_COMMIT_MSG=\"$(git log --format=%s --no-merges -n 1)\""
+  - source version.properties
+  - export MAJOR MINOR PATCH
+
+# https://docs.travis-ci.com/user/customizing-the-build#Skipping-the-Installation-Step
+install: true  # if we don't skip install, ./gradlew assemble is invoked, but this task is not available.
+
+before_script:
+  - export PATH=$TRAVIS_BUILD_DIR/bin:$PATH  # ensure our tools are prefered over included ones.
+  - export ARTIFACTORY_DEPLOY="true"
+
+script:
+  - ./gradlew ktlintCheck
+  - ./gradlew detekt
+  - ./gradlew build
+
+deploy:
+  - provider: script
+    script: scripts/bintrayUpload.sh
+    skip_cleanup: true
+    on:
+      tags: true
+
+after_deploy:
+  - ./gradlew createTweet
