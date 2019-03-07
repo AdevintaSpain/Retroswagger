@@ -119,8 +119,7 @@ Also, it's possible that you will need to add more rules.
 If you are using using a test framework it will be needed to add a explicit dependency in order to use it on your tests
 
 ```groovy
-def retroswaggerVersion = '0.0.9'
-androidTestAnnotationProcessor "com.schibsted.spain:retroswagger:$retroswaggerVersion"
+androidTestAnnotationProcessor "com.schibsted.spain:retroswagger:1.0.0"
 ```
 
 
