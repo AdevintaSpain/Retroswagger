@@ -35,6 +35,14 @@
 
 ### Download
 
+Include the **jcenter** repository in your top `build.gradle`:
+> Enabled by default on AndroidStudio projects
+```groovy
+allprojects {
+    jcenter()
+}
+```
+
 It requires kapt in order to make it run. You need to add this line on the build.gradle of the module where you want use it.
 
 ```groovy
