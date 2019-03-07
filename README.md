@@ -8,12 +8,7 @@
 <img align="left" width="0" height="128px" hspace="10" />
 
 <div style="display:block; height: 168px;">
-* <i>
-Includes an Annotation Processor to generate code for Retrofit 2 and RxJava 2 based on Swagger; in Kotlin</i> *
-
-
-
-Retroswagger is a library that generates the code for Retrofit based on a Swagger endpoint.
+* <i>A library that generates kotlin code for Retrofit 2 based on a Swagger endpoint; includes an Annotation Processor to generate and export the code</i> *
 
 <br/>
 <p align="center">
