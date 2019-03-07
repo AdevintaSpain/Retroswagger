@@ -10,7 +10,7 @@
 <div style="display:block; height: 168px;">
 <i>A library that generates kotlin code for Retrofit 2 based on a Swagger endpoint; includes an Annotation Processor to generate and export the code</i></div>
 
-<br/>
+<br/><br/>
 <p align="center">
 <b><a href="#features">Features</a></b>
 |
