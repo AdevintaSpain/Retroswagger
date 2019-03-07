@@ -8,7 +8,7 @@
 <img align="left" width="0" height="128px" hspace="10" />
 
 <div style="display:block; height: 168px;">
-* <i>A library that generates kotlin code for Retrofit 2 based on a Swagger endpoint; includes an Annotation Processor to generate and export the code</i> *
+<i>A library that generates kotlin code for Retrofit 2 based on a Swagger endpoint; includes an Annotation Processor to generate and export the code</i></div>
 
 <br/>
 <p align="center">
