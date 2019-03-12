@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/style.css?t=90051322">
+    <script src="assets/script.js?t=93f1a66c"></script>
+    <title>Features</title>
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body class="-menu-visible">
+    <div class="doc-layout">
+      <div class="toggle menu-toggle js-menu-toggle"></div>
+      <div class="menu toc-menu">
+        <ul>
+          <li class="menu-item -level-0 -parent">
+            <ul class="submenu">
+              <li class="menu-item -level-1"><a class="link title -active link-index" href="index.html">Retroswagger</a>
+              </li>
+              <li class="menu-item -level-1"><a class="link title link-features" href="#features">Features</a>
+              </li>
+              <li class="menu-item -level-1"><a class="link title link-download" href="#download">Download</a>
+              </li>
+              <li class="menu-item -level-1"><a class="link title link-how-to-use-it" href="#how-to-use-it">How to use it</a>
+              </li>
+              <li class="menu-item -level-1"><a class="link title link-android" href="#android">Android</a>
+              </li>
+              <li class="menu-item -level-1"><a class="link title link-who-made-this" href="#who-made-this">Who made this</a>
+              </li>
+              <li class="menu-item -level-1"><a class="link title link-contribute" href="#contribute">Contribute</a>
+              </li>
+              <li class="menu-item -level-1"><a class="link title link-bugs-and-feedback" href="#bugs-and-feedback">Bugs and Feedback</a>
+              </li>
+              <li class="menu-item -level-1"><a class="link title link-license" href="#license">License</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="body page-index">
+        <div class="header-nav">
+          <div class="right">
+          </div>
+        </div>
+        <div class="markdown-body"><!--
+  Title: Retroswagger - Kotlin code generator for Retrofit2 and RxJava2 based on Swagger
+  Description: Retroswagger is a library that generates kotlin code for Retrofit 2 based on a Swagger endpoint. Includes an Annotation Processor to export and write the code.
+  Author: SchibstedSpain
+  -->
+<img src="https://github.com/SchibstedSpain/Retroswagger/raw/master/media/retroswagger_logo.png" align="left" height="128px">
+<img align="left" width="0" height="128px" hspace="10">
+<div style="display:block; height: 168px;">
+<i>A library that generates kotlin code for Retrofit 2 based on a Swagger endpoint; includes an Annotation Processor to generate and export the code</i></div>
+<p><br><br></p>
+<p align="center">
+<b><a href="#features">Features</a></b>
+|
+<b><a href="#download">Download</a></b>
+|
+<b><a href="#who-made-this">Who Made This</a></b>
+|
+<b><a href="#contribute">Contribute</a></b>
+|
+<b><a href="#bugs-and-feedback">Bugs and Feedback</a></b>
+|
+<b><a href="#license">License</a></b>
+</p>
+<br>
+<h3 id="features">Features</h3>
+<ul>
+<li>Easy interface</li>
+<li>Model and DataSource auto-generated</li>
+<li>Swagger v2 integration: create Data Sources based on swagger documentation</li>
+</ul>
+<h3 id="download">Download</h3>
+<p>Include the <strong>jcenter</strong> repository in your top <code>build.gradle</code>:</p>
+<blockquote>
+<p>Enabled by default on AndroidStudio projects</p>
+</blockquote>
+<pre><code class="lang-groovy">allprojects {
+    jcenter()
+}
+</code></pre>
+<p>It requires kapt in order to make it run. You need to add this line on the build.gradle of the module where you want use it.</p>
+<pre><code class="lang-groovy">apply <span class="pl-s">plugin:</span> <span class="pl-s">&quot;kotlin-kapt&quot;</span>
+</code></pre>
+<pre><code class="lang-groovy">kapt <span class="pl-s">&quot;com.schibsted.spain:retroswagger:1.0.0&quot;</span>
+annotationProcessor <span class="pl-s">&quot;com.schibsted.spain:retroswagger:1.0.0&quot;</span>
+implementation <span class="pl-s">&quot;com.schibsted.spain:retroswagger:1.0.0&quot;</span>
+</code></pre>
+<p>In order for your project recognizes the generated code you will need to include it into your sources path, like this:</p>
+<pre><code class="lang-groovy">android {
+  ...
+
+  sourceSets {
+    main.java.srcDirs += <span class="pl-s">&quot;${buildDir.absolutePath}/tmp/kapt3/incrementalData/debug/path/to/your/generated/code&quot;</span>
+  }
+
+  ...
+}
+</code></pre>
+<h3 id="how-to-use-it">How to use it</h3>
+<p>You can use your own file creator or use the annotation comes with the library that generates the files for you.
+On the class you want to include the generated code you need to add this annotation &quot;@Retroswagger()&quot;.</p>
+<pre><code class="lang-kotlin"><span class="hljs-meta">@Retroswagger(
+    <span class="hljs-meta-string">&quot;Swagger URL&quot;</span>,
+    <span class="hljs-meta-string">&quot;Name of the api interface you want to have&quot;</span>,
+    <span class="hljs-meta-string">&quot;Cache policy in Days&quot;</span>,
+    <span class="hljs-meta-string">&quot;Remove trailing slash on the interface methods&quot;</span>)</span>
+<span class="hljs-class"><span class="pl-k">class</span> <span class="pl-ent">MyClass</span></span>() {
+}
+</code></pre>
+<p>Trailing slash example:</p>
+<ul>
+<li>option to &quot;true&quot;: <code>@GET(&quot;pet/findByStatus&quot;)</code></li>
+<li>option to &quot;false&quot;: <code>@GET(&quot;/pet/findByStatus&quot;)</code></li>
+</ul>
+<p>Example:</p>
+<pre><code class="lang-kotlin"><span class="hljs-meta">@Retroswagger(<span class="hljs-meta-string">&quot;http://petstore.swagger.io/v2/swagger.json&quot;</span>, <span class="hljs-meta-string">&quot;PetStore&quot;</span>, 1, true)</span>
+<span class="hljs-class"><span class="pl-k">class</span> <span class="pl-ent">MainActivity</span> : <span class="hljs-type">AppCompatActivity</span></span>() {
+
+    <span class="pl-k">override</span> <span class="hljs-function"><span class="pl-k">fun</span> <span class="pl-ent">onCreate</span><span class="hljs-params">(savedInstanceState: <span class="hljs-type">Bundle</span>?)</span></span> {
+        <span class="pl-k">super</span>.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+}
+</code></pre>
+<p>You need to take into account that this will generate all the files on the same package you include this annotation.
+For example, if you include it on the class &quot;MyActivity&quot; that is on the package &quot;com.company.mymodule.myfeature.views&quot; it will assign the package for all the generated files to this package.</p>
+<h3 id="android">Android</h3>
+<p>If you are using it on an Android project and you use Proguard, you will need to add this proguard rules:</p>
+<pre><code class="lang-kotlin">-dontwarn org.yaml.snakeyaml.**
+-dontwarn org.slf4j.**
+-dontwarn io.swagger.**
+-dontwarn com.google.common.**
+-dontwarn com.google.auto.**
+-dontwarn javax.xml.datatype.**
+-dontwarn com.fasterxml.jackson.**
+-dontwarn com.squareup.kotlinpoet.**
+-dontwarn com.schibsted.spain.**
+</code></pre>
+<p>Beware, if you are using one of these package maybe one or more of these rule will not be needed.
+Also, it&apos;s possible that you will need to add more rules.</p>
+<p>If you are using using a test framework it will be needed to add a explicit dependency in order to use it on your tests</p>
+<pre><code class="lang-groovy">androidTestAnnotationProcessor <span class="pl-s">&quot;com.schibsted.spain:retroswagger:1.0.0&quot;</span>
+</code></pre>
+<h2 id="who-made-this">Who made this</h2>
+<table>
+<thead>
+<tr>
+<th><a href="https://github.com/ferranpons"><img src="https://avatars2.githubusercontent.com/u/1225463?v=3&amp;s=460" alt="Ferran Pons" align="left" height="100" width="100"></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/ferranpons">Ferran Pons</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="contribute">Contribute</h2>
+<ol>
+<li>Create an issue to discuss about your idea</li>
+<li>[Fork it] (<a href="https://github.com/SchibstedSpain/retroswagger/fork">https://github.com/SchibstedSpain/retroswagger/fork</a>)</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am &apos;Add some feature&apos;</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create a new Pull Request</li>
+<li>Profit! :white_check_mark:</li>
+</ol>
+<h2 id="bugs-and-feedback">Bugs and Feedback</h2>
+<p>For bugs, questions and discussions please use the <a href="https://github.com/SchibstedSpain/retroswagger/issues">Github Issues</a>.</p>
+<h2 id="license">License</h2>
+<p>Copyright 2019 Schibsted Classified Media Spain S.L.</p>
+<p>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<pre><code>http://www.apache.org/licenses/LICENSE-2.0
+</code></pre>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -15,7 +15,10 @@ out/
 
 # Gradle files
 .gradle/
-build/
+
+package.json
+package-lock.json
+.node_modules
 
 # Local configuration file (sdk path, etc)
 local.properties
