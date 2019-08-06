@@ -61,7 +61,7 @@ class RetroswaggerApiBuilder(
     }
 
     private val swaggerModel: Swagger = try {
-        if (!retroswaggerApiConfiguration.swaggerUrl.isEmpty()) {
+        if (retroswaggerApiConfiguration.swaggerUrl.isNotEmpty()) {
             SwaggerParser().read(retroswaggerApiConfiguration.swaggerUrl)
         } else {
             SwaggerParser().read(retroswaggerApiConfiguration.swaggerFile)
@@ -104,7 +104,7 @@ class RetroswaggerApiBuilder(
     }
 
     private fun addModelEnums() {
-        if (swaggerModel.definitions != null && !swaggerModel.definitions.isEmpty()) {
+        if (swaggerModel.definitions != null && swaggerModel.definitions.isNotEmpty()) {
             for (definition in swaggerModel.definitions) {
                 if (definition.value != null && definition.value.properties != null) {
                     for (modelProperty in definition.value.properties) {
@@ -127,7 +127,7 @@ class RetroswaggerApiBuilder(
     }
 
     private fun addOperationResponseEnums() {
-        if (swaggerModel.paths != null && !swaggerModel.paths.isEmpty()) {
+        if (swaggerModel.paths != null && swaggerModel.paths.isNotEmpty()) {
             for (path in swaggerModel.paths) {
                 for (operation in path.value.operationMap) {
                     try {
@@ -155,7 +155,7 @@ class RetroswaggerApiBuilder(
     private fun createApiResponseBodyModel(): List<String> {
         val classNameList = ArrayList<String>()
 
-        if (swaggerModel.definitions != null && !swaggerModel.definitions.isEmpty()) {
+        if (swaggerModel.definitions != null && swaggerModel.definitions.isNotEmpty()) {
             for (definition in swaggerModel.definitions) {
 
                 var modelClassTypeSpec: TypeSpec.Builder
@@ -202,7 +202,7 @@ class RetroswaggerApiBuilder(
     }
 
     private fun addApiPathMethods(apiInterfaceTypeSpec: TypeSpec.Builder, classNameList: List<String>) {
-        if (swaggerModel.paths != null && !swaggerModel.paths.isEmpty()) {
+        if (swaggerModel.paths != null && swaggerModel.paths.isNotEmpty()) {
             for (path in swaggerModel.paths) {
                 for (operation in path.value.operationMap) {
 
@@ -323,9 +323,8 @@ class RetroswaggerApiBuilder(
 
     private fun getBodyParameterSpec(parameter: Parameter): TypeName {
         val bodyParameter = parameter as BodyParameter
-        val schema = bodyParameter.schema
 
-        return when (schema) {
+        return when (val schema = bodyParameter.schema) {
             is RefModel -> ClassName.bestGuess(schema.simpleRef.capitalize()).requiredOrNullable(parameter.required)
 
             is ArrayModel -> getTypedArray(schema.items).requiredOrNullable(parameter.required)
@@ -354,7 +353,7 @@ class RetroswaggerApiBuilder(
         return List::class.asClassName().parameterizedBy(typeProperty)
     }
 
-    private fun TypeName.requiredOrNullable(required: Boolean) = if (required) this else asNullable()
+    private fun TypeName.requiredOrNullable(required: Boolean) = if (required) this else copy(nullable = true)
 
     private fun getReturnedClass(
         operation: MutableMap.MutableEntry<HttpMethod, Operation>,
