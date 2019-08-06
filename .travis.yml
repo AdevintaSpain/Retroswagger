@@ -45,6 +45,9 @@ before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 
 before_install:
+  - touch $HOME/.android/repositories.cfg
+  - yes | sdkmanager "platforms;android-28"
+  - yes | sdkmanager "build-tools;28.0.3"
   - "export TRAVIS_LAST_COMMIT_MSG=\"$(git log --format=%s --no-merges -n 1)\""
   - source version.properties
   - export MAJOR MINOR PATCH
