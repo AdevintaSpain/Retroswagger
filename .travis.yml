@@ -11,7 +11,7 @@ env:
   global:
     - TERM=dumb
     - DX_HEAP_SIZE=1536
-    - ANDROID_API=28
+    - ANDROID_API=29
     - EMULATOR_API=24
     - ANDROID_BUILD_TOOLS=29.0.0
     - ADB_INSTALL_TIMEOUT=5
