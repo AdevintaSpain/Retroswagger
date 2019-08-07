@@ -46,6 +46,8 @@ import java.lang.IllegalStateException
 import java.net.UnknownHostException
 import java.util.ArrayList
 
+private const val PACKAGE_PREFIX = "com.schibsted.retroswagger."
+
 class RetroswaggerApiBuilder(
     private val retroswaggerApiConfiguration: RetroswaggerApiConfiguration,
     private val errorTracking: RetroswaggerErrorTracking
@@ -325,7 +327,7 @@ class RetroswaggerApiBuilder(
         val bodyParameter = parameter as BodyParameter
 
         return when (val schema = bodyParameter.schema) {
-            is RefModel -> ClassName.bestGuess(schema.simpleRef.capitalize()).requiredOrNullable(parameter.required)
+            is RefModel -> ClassName.bestGuess(PACKAGE_PREFIX + schema.simpleRef.capitalize()).requiredOrNullable(parameter.required)
 
             is ArrayModel -> getTypedArray(schema.items).requiredOrNullable(parameter.required)
 
@@ -335,7 +337,7 @@ class RetroswaggerApiBuilder(
                 if (STRING_SWAGGER_TYPE == bodyParameter1.type) {
                     String::class.asClassName().requiredOrNullable(parameter.required)
                 } else {
-                    ClassName.bestGuess(parameter.name.capitalize()).requiredOrNullable(parameter.required)
+                    ClassName.bestGuess(PACKAGE_PREFIX + parameter.name.capitalize()).requiredOrNullable(parameter.required)
                 }
             }
         }
