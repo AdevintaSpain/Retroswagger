@@ -2,8 +2,9 @@ package com.schibsted.spain.retroswagger
 
 import com.google.auto.service.AutoService
 import com.schibsted.spain.retroswagger.annotation.Retroswagger
+import com.schibsted.spain.retroswagger.lib.FeignApiBuilder
 import com.schibsted.spain.retroswagger.lib.RetroswaggerErrorTracking
-import com.schibsted.spain.retroswagger.lib.RetroswaggerApiBuilder
+import com.schibsted.spain.retroswagger.lib.RetrofitApiBuilder
 import com.schibsted.spain.retroswagger.lib.RetroswaggerApiConfiguration
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.TypeSpec
@@ -150,7 +151,35 @@ class RetroswaggerGenerator : AbstractProcessor() {
             overrideInterfaceSlash
         )
 
-        val kotlinApiBuilder = RetroswaggerApiBuilder(
+        val isRetrofitAvailable = try {
+            Class.forName("retrofit2.Retrofit")
+            true
+        } catch (exception: ClassNotFoundException) {
+            false
+        }
+
+        val isFeignAvailable = try {
+            Class.forName("retrofit2.Retrofit")
+            true
+        } catch (exception: ClassNotFoundException) {
+            false
+        }
+
+        if (isRetrofitAvailable) {
+            generateRetrofitCode(configuration, className, pack)
+        }
+
+        if (isFeignAvailable) {
+            generateFeignCode(configuration, className, pack)
+        }
+    }
+
+    private fun generateRetrofitCode(
+        configuration: RetroswaggerApiConfiguration,
+        className: String,
+        pack: String
+    ) {
+        val kotlinApiBuilder = RetrofitApiBuilder(
             configuration,
             DummyRetroswaggerErrorTracking()
         )
@@ -164,6 +193,27 @@ class RetroswaggerGenerator : AbstractProcessor() {
             generateClass(className, pack, typeSpec)
         }
     }
+
+    private fun generateFeignCode(
+        configuration: RetroswaggerApiConfiguration,
+        className: String,
+        pack: String
+    ) {
+        val feignApiBuilder = FeignApiBuilder(
+            configuration,
+            DummyRetroswaggerErrorTracking()
+        )
+        feignApiBuilder.build()
+
+        generateClass(className, pack, feignApiBuilder.getGeneratedApiInterfaceTypeSpec())
+        for (typeSpec in feignApiBuilder.getGeneratedModelListTypeSpec()) {
+            generateClass(className, pack, typeSpec)
+        }
+        for (typeSpec in feignApiBuilder.getGeneratedEnumListTypeSpec()) {
+            generateClass(className, pack, typeSpec)
+        }
+    }
+
 
     private fun generateClass(
         className: String,
