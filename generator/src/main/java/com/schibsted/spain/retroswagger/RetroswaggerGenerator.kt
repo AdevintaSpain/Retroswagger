@@ -159,7 +159,7 @@ class RetroswaggerGenerator : AbstractProcessor() {
         }
 
         val isFeignAvailable = try {
-            Class.forName("retrofit2.Retrofit")
+            Class.forName("feign.Param")
             true
         } catch (exception: ClassNotFoundException) {
             false

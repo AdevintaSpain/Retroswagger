@@ -67,6 +67,8 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
+    //implementation 'io.github.openfeign:feign-core:10.2.3'
+
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
