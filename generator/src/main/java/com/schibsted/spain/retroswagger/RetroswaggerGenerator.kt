@@ -167,9 +167,7 @@ class RetroswaggerGenerator : AbstractProcessor() {
 
         if (isRetrofitAvailable) {
             generateRetrofitCode(configuration, className, pack)
-        }
-
-        if (isFeignAvailable) {
+        } else if (isFeignAvailable) {
             generateFeignCode(configuration, className, pack)
         }
     }

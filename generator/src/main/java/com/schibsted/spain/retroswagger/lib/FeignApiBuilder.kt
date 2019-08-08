@@ -12,7 +12,6 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.TypeVariableName
 import com.squareup.kotlinpoet.asClassName
-import feign.Body
 import feign.Param
 import feign.RequestLine
 import io.reactivex.Completable
@@ -208,19 +207,19 @@ class FeignApiBuilder(
                         annotationSpec = when {
                             operation.key.name.contains(
                                 "GET") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("GET \"${path.key.removePrefix("/")}\"").build()
+                                .addMember("\"GET ${path.key.removePrefix("/")}\"").build()
                             operation.key.name.contains(
                                 "POST") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("POST \"${path.key.removePrefix("/")}\"").build()
+                                .addMember("\"POST ${path.key.removePrefix("/")}\"").build()
                             operation.key.name.contains(
                                 "PUT") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("PUT \"${path.key.removePrefix("/")}\"").build()
+                                .addMember("\"PUT ${path.key.removePrefix("/")}\"").build()
                             operation.key.name.contains(
                                 "PATCH") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("PATCH \"${path.key.removePrefix("/")}\"").build()
+                                .addMember("\"PATCH ${path.key.removePrefix("/")}\"").build()
                             operation.key.name.contains(
                                 "DELETE") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("DELETE \"${path.key.removePrefix("/")}\"").build()
+                                .addMember("\"DELETE ${path.key.removePrefix("/")}\"").build()
                             else -> AnnotationSpec.builder(RequestLine::class)
                                 .addMember("\"${path.key.removePrefix("/")}\"").build()
                         }
@@ -228,19 +227,19 @@ class FeignApiBuilder(
                         annotationSpec = when {
                             operation.key.name.contains(
                                 "GET") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("GET \"${path.key}\"").build()
+                                .addMember("\"GET ${path.key}\"").build()
                             operation.key.name.contains(
                                 "POST") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("POST \"${path.key}\"").build()
+                                .addMember("\"POST ${path.key}\"").build()
                             operation.key.name.contains(
                                 "PUT") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("PUT \"${path.key}\"").build()
+                                .addMember("\"PUT ${path.key}\"").build()
                             operation.key.name.contains(
                                 "PATCH") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("PATCH \"${path.key}\"").build()
+                                .addMember("\"PATCH ${path.key}\"").build()
                             operation.key.name.contains(
                                 "DELETE") -> AnnotationSpec.builder(RequestLine::class)
-                                .addMember("DELETE \"${path.key}\"").build()
+                                .addMember("\"DELETE ${path.key}\"").build()
                             else -> AnnotationSpec.builder(RequestLine::class)
                                 .addMember("\"${path.key}\"").build()
                         }
@@ -297,7 +296,7 @@ class FeignApiBuilder(
             when (parameter.`in`) {
                 "body" -> {
                     ParameterSpec.builder(name, getBodyParameterSpec(parameter))
-                        .addAnnotation(AnnotationSpec.builder(Body::class).build()).build()
+                        .addAnnotation(AnnotationSpec.builder(Param::class).addMember("\"${parameter.name}\"").build()).build()
                 }
                 "path" -> {
                     val type = getKotlinClassTypeName((parameter as PathParameter).type, parameter.format).requiredOrNullable(parameter.required)
