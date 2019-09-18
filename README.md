@@ -50,9 +50,9 @@ apply plugin: "kotlin-kapt"
 ```
 
 ```groovy
-kapt "com.schibsted.spain:retroswagger:1.0.0"
-annotationProcessor "com.schibsted.spain:retroswagger:1.0.0"
-implementation "com.schibsted.spain:retroswagger:1.0.0"
+kapt "com.schibsted.spain:retroswagger:1.1.0"
+annotationProcessor "com.schibsted.spain:retroswagger:1.1.0"
+implementation "com.schibsted.spain:retroswagger:1.1.0"
 ```
 
 In order for your project recognizes the generated code you will need to include it into your sources path, like this:
