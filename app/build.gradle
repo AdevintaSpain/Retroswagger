@@ -24,6 +24,11 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 sourceSets {
@@ -61,6 +66,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    //implementation 'io.github.openfeign:feign-core:10.2.3'
 
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
 

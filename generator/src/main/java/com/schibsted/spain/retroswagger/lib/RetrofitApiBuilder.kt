@@ -48,7 +48,7 @@ import java.util.ArrayList
 
 private const val PACKAGE_PREFIX = "com.schibsted.retroswagger."
 
-class RetroswaggerApiBuilder(
+class RetrofitApiBuilder(
     private val retroswaggerApiConfiguration: RetroswaggerApiConfiguration,
     private val errorTracking: RetroswaggerErrorTracking
 ) {
