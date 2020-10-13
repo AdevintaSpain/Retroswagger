@@ -23,6 +23,23 @@ plugins {
     id "io.gitlab.arturbosch.detekt" version "1.14.1"
 }
 
+detekt {
+    failFast = true
+    buildUponDefaultConfig = true
+    input = files("$projectDir/src/main/java")
+    config = files("$rootDir/config/detekt.yml")
+    reports {
+        xml {
+            enabled = true
+            destination = file("$projectDir/build/reports/detekt/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("$projectDir/build/reports/detekt/detekt.html")
+        }
+    }
+}
+
 allprojects {
     repositories {
         google()

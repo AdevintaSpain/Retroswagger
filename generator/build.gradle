@@ -22,21 +22,6 @@ def buildVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
 group 'com.schibsted.spain'
 version buildVersion
 
-detekt {
-    input = files("$projectDir/src/main/java")
-    config = files("$rootDir/config/detekt.yml")
-    reports {
-        xml {
-            enabled = true
-            destination = file("$projectDir/build/reports/detekt/detekt.xml")
-        }
-        html {
-            enabled = true
-            destination = file("$projectDir/build/reports/detekt/detekt.html")
-        }
-    }
-}
-
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
