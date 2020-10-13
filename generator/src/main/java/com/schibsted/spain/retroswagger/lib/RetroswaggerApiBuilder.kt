@@ -14,11 +14,11 @@ import com.squareup.kotlinpoet.TypeVariableName
 import com.squareup.kotlinpoet.asClassName
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.swagger.models.ArrayModel
 import io.swagger.models.HttpMethod
 import io.swagger.models.ModelImpl
 import io.swagger.models.Operation
 import io.swagger.models.RefModel
-import io.swagger.models.ArrayModel
 import io.swagger.models.Swagger
 import io.swagger.models.parameters.BodyParameter
 import io.swagger.models.parameters.Parameter
@@ -42,9 +42,7 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 import java.io.FileNotFoundException
-import java.lang.IllegalStateException
 import java.net.UnknownHostException
-import java.util.ArrayList
 
 private const val PACKAGE_PREFIX = "com.schibsted.retroswagger."
 
@@ -175,9 +173,11 @@ class RetroswaggerApiBuilder(
                     for (modelProperty in definition.value.properties) {
                         val typeName: TypeName = getTypeName(modelProperty)
                         val propertySpec = PropertySpec.builder(modelProperty.key, typeName)
-                            .addAnnotation(AnnotationSpec.builder(SerializedName::class)
-                                .addMember("\"${modelProperty.key}\"")
-                                .build())
+                            .addAnnotation(
+                                AnnotationSpec.builder(SerializedName::class)
+                                    .addMember("\"${modelProperty.key}\"")
+                                    .build()
+                            )
                             .initializer(modelProperty.key)
                             .build()
                         primaryConstructor.addParameter(modelProperty.key, typeName)
@@ -211,49 +211,56 @@ class RetroswaggerApiBuilder(
                     var annotationSpec: AnnotationSpec
                     if (retroswaggerApiConfiguration.overrideInterfaceSlash) {
                         annotationSpec = when {
-                            operation.key.name.contains(
-                                "GET") -> AnnotationSpec.builder(GET::class)
-                                .addMember("\"${path.key.removePrefix("/")}\"").build()
-                            operation.key.name.contains(
-                                "POST") -> AnnotationSpec.builder(POST::class)
-                                .addMember("\"${path.key.removePrefix("/")}\"").build()
-                            operation.key.name.contains(
-                                "PUT") -> AnnotationSpec.builder(PUT::class)
-                                .addMember("\"${path.key.removePrefix("/")}\"").build()
-                            operation.key.name.contains(
-                                "PATCH") -> AnnotationSpec.builder(PATCH::class)
-                                .addMember("\"${path.key.removePrefix("/")}\"").build()
-                            operation.key.name.contains(
-                                "DELETE") -> AnnotationSpec.builder(DELETE::class)
-                                .addMember("\"${path.key.removePrefix("/")}\"").build()
-                            else -> AnnotationSpec.builder(GET::class)
-                                .addMember("\"${path.key.removePrefix("/")}\"").build()
+                            operation.key.name.contains("GET") ->
+                                AnnotationSpec.builder(GET::class)
+                                    .addMember("\"${path.key.removePrefix("/")}\"").build()
+                            operation.key.name.contains("POST") ->
+                                AnnotationSpec.builder(POST::class)
+                                    .addMember("\"${path.key.removePrefix("/")}\"").build()
+                            operation.key.name.contains("PUT") ->
+                                AnnotationSpec.builder(PUT::class)
+                                    .addMember("\"${path.key.removePrefix("/")}\"").build()
+                            operation.key.name.contains("PATCH") ->
+                                AnnotationSpec.builder(PATCH::class)
+                                    .addMember("\"${path.key.removePrefix("/")}\"").build()
+                            operation.key.name.contains("DELETE") ->
+                                AnnotationSpec.builder(DELETE::class)
+                                    .addMember("\"${path.key.removePrefix("/")}\"").build()
+                            else ->
+                                AnnotationSpec.builder(GET::class)
+                                    .addMember("\"${path.key.removePrefix("/")}\"").build()
                         }
                     } else {
                         annotationSpec = when {
-                            operation.key.name.contains(
-                                "GET") -> AnnotationSpec.builder(GET::class)
-                                .addMember("\"${path.key}\"").build()
-                            operation.key.name.contains(
-                                "POST") -> AnnotationSpec.builder(POST::class)
-                                .addMember("\"${path.key}\"").build()
-                            operation.key.name.contains(
-                                "PUT") -> AnnotationSpec.builder(PUT::class)
-                                .addMember("\"${path.key}\"").build()
-                            operation.key.name.contains(
-                                "PATCH") -> AnnotationSpec.builder(PATCH::class)
-                                .addMember("\"${path.key}\"").build()
-                            operation.key.name.contains(
-                                "DELETE") -> AnnotationSpec.builder(DELETE::class)
-                                .addMember("\"${path.key}\"").build()
-                            else -> AnnotationSpec.builder(GET::class)
-                                .addMember("\"${path.key}\"").build()
+                            operation.key.name.contains("GET") ->
+                                AnnotationSpec.builder(GET::class)
+                                    .addMember("\"${path.key}\"").build()
+                            operation.key.name.contains("POST") ->
+                                AnnotationSpec.builder(POST::class)
+                                    .addMember("\"${path.key}\"").build()
+                            operation.key.name.contains("PUT") ->
+                                AnnotationSpec.builder(PUT::class)
+                                    .addMember("\"${path.key}\"").build()
+                            operation.key.name.contains("PATCH") ->
+                                AnnotationSpec.builder(PATCH::class)
+                                    .addMember("\"${path.key}\"").build()
+                            operation.key.name.contains("DELETE") ->
+                                AnnotationSpec.builder(DELETE::class)
+                                    .addMember("\"${path.key}\"").build()
+                            else ->
+                                AnnotationSpec.builder(GET::class)
+                                    .addMember("\"${path.key}\"").build()
                         }
                     }
 
                     try {
-                        val doc = ((listOf(operation.value.summary + "\n") +
-                                getMethodParametersDocs(operation)).joinToString("\n")).trim()
+                        val doc = (
+                            (
+                                listOf(operation.value.summary + "\n") + getMethodParametersDocs(
+                                    operation
+                                )
+                                ).joinToString("\n")
+                            ).trim()
 
                         val returnedClass = getReturnedClass(operation, classNameList)
                         val methodParameters = getMethodParameters(operation)
@@ -362,8 +369,10 @@ class RetroswaggerApiBuilder(
         classNameList: List<String>
     ): TypeName {
         try {
-            if (operation.value.responses[OK_RESPONSE]?.schema != null &&
-                operation.value.responses[OK_RESPONSE]?.schema is RefProperty) {
+            if (
+                operation.value.responses[OK_RESPONSE]?.schema != null &&
+                operation.value.responses[OK_RESPONSE]?.schema is RefProperty
+            ) {
                 val refProperty = (operation.value.responses[OK_RESPONSE]?.schema as RefProperty)
                 var responseClassName = refProperty.simpleRef
                 responseClassName = getValidClassName(responseClassName, refProperty)
@@ -371,8 +380,10 @@ class RetroswaggerApiBuilder(
                 if (classNameList.contains(responseClassName)) {
                     return Single::class.asClassName().parameterizedBy(TypeVariableName.invoke(responseClassName))
                 }
-            } else if (operation.value.responses[OK_RESPONSE]?.schema != null &&
-                operation.value.responses[OK_RESPONSE]?.schema is ArrayProperty) {
+            } else if (
+                operation.value.responses[OK_RESPONSE]?.schema != null &&
+                operation.value.responses[OK_RESPONSE]?.schema is ArrayProperty
+            ) {
                 val refProperty = (operation.value.responses[OK_RESPONSE]?.schema as ArrayProperty)
                 var responseClassName = (refProperty.items as RefProperty).simpleRef
                 responseClassName = getValidClassName(responseClassName, (refProperty.items as RefProperty))
