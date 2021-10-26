@@ -1,10 +1,10 @@
 <!--
   Title: Retroswagger - Kotlin code generator for Retrofit2 and RxJava2 based on Swagger
   Description: Retroswagger is a library that generates kotlin code for Retrofit 2 based on a Swagger endpoint. Includes an Annotation Processor to export and write the code.
-  Author: SchibstedSpain
+  Author: AdevintaSpain
   -->
 
-<img src="https://github.com/SchibstedSpain/Retroswagger/raw/master/media/retroswagger_logo.png" align="left" height="128px" />
+<img src="https://github.com/AdevintaSpain/Retroswagger/raw/master/media/retroswagger_logo.png" align="left" height="128px" />
 <img align="left" width="0" height="128px" hspace="10" />
 
 <div style="display:block; height: 168px;">
@@ -39,7 +39,7 @@ Include the **jcenter** repository in your top `build.gradle`:
 > Enabled by default on AndroidStudio projects
 ```groovy
 allprojects {
-    jcenter()
+    mavenCentral()
 }
 ```
 
@@ -160,7 +160,7 @@ For bugs, questions and discussions please use the [Github Issues](https://githu
 License
 -------
 
-Copyright 2019 Schibsted Classified Media Spain S.L.
+Copyright 2021 Adevinta Spain S.L.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
