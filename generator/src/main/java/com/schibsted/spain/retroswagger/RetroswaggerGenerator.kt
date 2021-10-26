@@ -132,7 +132,7 @@ class RetroswaggerGenerator : AbstractProcessor() {
     private fun downloadSwagger(swaggerUrl: String): InputStream? {
         val request = Request.Builder().url(swaggerUrl).build()
         val response = OkHttpClient().newCall(request).execute()
-        return response.body()?.byteStream()
+        return response.body?.byteStream()
     }
 
     private fun processKotlin(

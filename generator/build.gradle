@@ -8,7 +8,6 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 ext.versionProps = new Properties()
@@ -25,10 +24,10 @@ version buildVersion
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.2'
 
     implementation 'com.squareup:kotlinpoet:1.3.0'
-    implementation "io.reactivex.rxjava2:rxjava:2.2.19"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.21"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
     def jacksonVersion = '2.8.4'
@@ -49,7 +48,7 @@ dependencies {
 
     implementation "com.google.auto.service:auto-service:1.0-rc2"
     kapt "com.google.auto.service:auto-service:1.0-rc2"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.10"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.5.31"
 }
 
 sourceCompatibility = "8"
