@@ -1,4 +1,4 @@
-package com.schibsted.retroswagger
+package com.adevinta.retroswagger
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView

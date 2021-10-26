@@ -1,10 +1,10 @@
-package com.schibsted.spain.retroswagger
+package com.adevinta.spain.retroswagger
 
 import com.google.auto.service.AutoService
-import com.schibsted.spain.retroswagger.annotation.Retroswagger
-import com.schibsted.spain.retroswagger.lib.RetroswaggerApiBuilder
-import com.schibsted.spain.retroswagger.lib.RetroswaggerApiConfiguration
-import com.schibsted.spain.retroswagger.lib.RetroswaggerErrorTracking
+import com.adevinta.spain.retroswagger.annotation.Retroswagger
+import com.adevinta.spain.retroswagger.lib.RetroswaggerApiBuilder
+import com.adevinta.spain.retroswagger.lib.RetroswaggerApiConfiguration
+import com.adevinta.spain.retroswagger.lib.RetroswaggerErrorTracking
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.TypeSpec
 import okhttp3.OkHttpClient

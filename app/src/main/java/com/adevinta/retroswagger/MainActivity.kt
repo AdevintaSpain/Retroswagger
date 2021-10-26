@@ -1,10 +1,10 @@
-package com.schibsted.retroswagger
+package com.adevinta.retroswagger
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.widget.Toast
-import com.schibsted.spain.retroswagger.annotation.Retroswagger
+import com.adevinta.spain.retroswagger.annotation.Retroswagger
 import kotlinx.android.synthetic.main.activity_main.pet_list
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

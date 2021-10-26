@@ -83,9 +83,9 @@
 <p>It requires kapt in order to make it run. You need to add this line on the build.gradle of the module where you want use it.</p>
 <pre><code class="lang-groovy">apply <span class="pl-s">plugin:</span> <span class="pl-s">&quot;kotlin-kapt&quot;</span>
 </code></pre>
-<pre><code class="lang-groovy">kapt <span class="pl-s">&quot;com.schibsted.spain:retroswagger:1.0.0&quot;</span>
-annotationProcessor <span class="pl-s">&quot;com.schibsted.spain:retroswagger:1.0.0&quot;</span>
-implementation <span class="pl-s">&quot;com.schibsted.spain:retroswagger:1.0.0&quot;</span>
+<pre><code class="lang-groovy">kapt <span class="pl-s">&quot;com.adevinta.spain:retroswagger:1.0.0&quot;</span>
+annotationProcessor <span class="pl-s">&quot;com.adevinta.spain:retroswagger:1.0.0&quot;</span>
+implementation <span class="pl-s">&quot;com.adevinta.spain:retroswagger:1.0.0&quot;</span>
 </code></pre>
 <p>In order for your project recognizes the generated code you will need to include it into your sources path, like this:</p>
 <pre><code class="lang-groovy">android {
@@ -136,12 +136,12 @@ For example, if you include it on the class &quot;MyActivity&quot; that is on th
 -dontwarn javax.xml.datatype.**
 -dontwarn com.fasterxml.jackson.**
 -dontwarn com.squareup.kotlinpoet.**
--dontwarn com.schibsted.spain.**
+-dontwarn com.adevinta.spain.**
 </code></pre>
 <p>Beware, if you are using one of these package maybe one or more of these rule will not be needed.
 Also, it&apos;s possible that you will need to add more rules.</p>
 <p>If you are using using a test framework it will be needed to add a explicit dependency in order to use it on your tests</p>
-<pre><code class="lang-groovy">androidTestAnnotationProcessor <span class="pl-s">&quot;com.schibsted.spain:retroswagger:1.0.0&quot;</span>
+<pre><code class="lang-groovy">androidTestAnnotationProcessor <span class="pl-s">&quot;com.adevinta.spain:retroswagger:1.0.0&quot;</span>
 </code></pre>
 <h2 id="who-made-this">Who made this</h2>
 <table>

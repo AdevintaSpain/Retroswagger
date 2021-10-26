@@ -1,4 +1,4 @@
-package com.schibsted.spain.retroswagger.lib
+package com.adevinta.spain.retroswagger.lib
 
 import com.google.gson.annotations.SerializedName
 import com.squareup.kotlinpoet.AnnotationSpec

@@ -1,4 +1,4 @@
-package com.schibsted.retroswagger
+package com.adevinta.retroswagger
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
