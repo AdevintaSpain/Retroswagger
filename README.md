@@ -50,9 +50,9 @@ apply plugin: "kotlin-kapt"
 ```
 
 ```groovy
-kapt "com.schibsted.spain:retroswagger:1.1.0"
-annotationProcessor "com.schibsted.spain:retroswagger:1.1.0"
-implementation "com.schibsted.spain:retroswagger:1.1.0"
+kapt "com.adevinta:retroswagger:1.1.0"
+annotationProcessor "com.adevinta:retroswagger:1.1.0"
+implementation "com.adevinta:retroswagger:1.1.0"
 ```
 
 In order for your project recognizes the generated code you will need to include it into your sources path, like this:
@@ -118,7 +118,7 @@ If you are using it on an Android project and you use Proguard, you will need to
 -dontwarn javax.xml.datatype.**
 -dontwarn com.fasterxml.jackson.**
 -dontwarn com.squareup.kotlinpoet.**
--dontwarn com.schibsted.spain.**
+-dontwarn com.adevinta.**
 ```
 
 Beware, if you are using one of these package maybe one or more of these rule will not be needed.
@@ -127,7 +127,7 @@ Also, it's possible that you will need to add more rules.
 If you are using using a test framework it will be needed to add a explicit dependency in order to use it on your tests
 
 ```groovy
-androidTestAnnotationProcessor "com.schibsted.spain:retroswagger:1.0.0"
+androidTestAnnotationProcessor "com.adevinta:retroswagger:1.0.0"
 ```
 
 
@@ -143,7 +143,7 @@ Contribute
 ----------
 
 1. Create an issue to discuss about your idea
-2. [Fork it] (https://github.com/SchibstedSpain/retroswagger/fork)
+2. [Fork it] (https://github.com/AdevintaSpain/retroswagger/fork)
 3. Create your feature branch (`git checkout -b my-new-feature`)
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
@@ -154,7 +154,7 @@ Contribute
 Bugs and Feedback
 -----------------
 
-For bugs, questions and discussions please use the [Github Issues](https://github.com/SchibstedSpain/retroswagger/issues).
+For bugs, questions and discussions please use the [Github Issues](https://github.com/AdevintaSpain/retroswagger/issues).
 
 
 License
