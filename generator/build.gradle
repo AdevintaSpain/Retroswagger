@@ -52,7 +52,7 @@ twitterPlugin {
     consumerSecret = System.getenv()['TWITTER_API_SECRET']
     accessToken = System.getenv()['TWITTER_ACCESS_TOKEN']
     accessTokenSecret = System.getenv()['TWITTER_ACCESS_TOKEN_SECRET']
-    message = "New Retroswagger version 1.1.0 available for download. Check out the details at https://github.com/AdevintaSpain/Retroswagger @AdevintaEng #Kotlin #library #Android #AndroidDev #CodeGeneration #kotlinpoet #swagger"
+    message = "New Retroswagger version 1.2.0 available for download. Check out the details at https://github.com/AdevintaSpain/Retroswagger @AdevintaEng #Kotlin #library #Android #AndroidDev #CodeGeneration #kotlinpoet #swagger"
 }
 
 task sourcesJar(type: Jar) {
