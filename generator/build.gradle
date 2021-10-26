@@ -5,21 +5,14 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'twitter-gradle-plugin'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 repositories {
     mavenCentral()
 }
 
-ext.versionProps = new Properties()
-versionProps.load(new FileInputStream(rootDir.absolutePath + "/version.properties"))
-
-def versionMajor = Integer.parseInt(versionProps['MAJOR'] as String)
-def versionMinor = Integer.parseInt(versionProps['MINOR'] as String)
-def versionPatch = Integer.parseInt(versionProps['PATCH'] as String)
-def buildVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
-
+ext["PUBLISH_ARTIFACT_ID"] = "retroswagger"
 group 'com.adevinta'
-version buildVersion
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -54,82 +47,17 @@ dependencies {
 sourceCompatibility = "8"
 targetCompatibility = "8"
 
-publishing {
-    publications {
-        Production(MavenPublication) {
-            groupId group
-            artifactId 'retroswagger'
-            version "${versionMajor}.${versionMinor}.${versionPatch}"
-
-            pom.withXml {
-                def dependenciesNode = asNode().appendNode('dependencies')
-
-                configurations.implementation.allDependencies.each {
-                    if (it.name != 'unspecified') {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
-                    }
-                }
-
-                // List all "api" dependencies (for new Gradle) as "compile" dependencies
-                configurations.api.getDependencies().each { dep -> addDependency(dep, "compile") }
-                // List all "implementation" dependencies (for new Gradle) as "runtime" dependencies
-                configurations.implementation.getAllDependencies().each { dep ->
-                    try {
-                        addDependency(dep, "runtime")
-                    } catch(Exception ignored) {
-                    }
-                }
-            }
-
-            artifact("$buildDir/libs/${project.getName()}-${versionMajor}.${versionMinor}.${versionPatch}.jar")
-        }
-    }
-}
-
-bintray {
-    user = project.hasProperty('BINTRAY_USER') ? project.property('BINTRAY_USER') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('BINTRAY_KEY') ? project.property('BINTRAY_KEY') : System.getenv('BINTRAY_KEY')
-    publications = ['Production']
-    configurations = ['archives']
-
-    pkg {
-        repo = 'maven'
-        name = 'retroswagger'
-        userOrg = 'schibstedspain'
-        description = "A library that generates kotlin code for Retrofit 2 based on a Swagger endpoint. Includes an Annotation Processor to export and write the code."
-        publish = true
-        dryRun = false
-        publicDownloadNumbers = true
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/SchibstedSpain/Retroswagger.git'
-        version {
-            name = "${versionMajor}.${versionMinor}.${versionPatch}"
-            desc = "A library that generates kotlin code for Retrofit 2 based on a Swagger endpoint. Includes an Annotation Processor to export and write the code."
-            released = new Date()
-            vcsTag = "${versionMajor}.${versionMinor}.${versionPatch}"
-        }
-    }
-}
-
 twitterPlugin {
     consumerKey = System.getenv()['TWITTER_API_KEY']
     consumerSecret = System.getenv()['TWITTER_API_SECRET']
     accessToken = System.getenv()['TWITTER_ACCESS_TOKEN']
     accessTokenSecret = System.getenv()['TWITTER_ACCESS_TOKEN_SECRET']
-    message = "New Retroswagger version ${versionMajor}.${versionMinor}.${versionPatch} available for download. Check out the details at https://github.com/SchibstedSpain/Retroswagger @SchibstedEng #Kotlin #library #Android #AndroidDev #CodeGeneration #kotlinpoet #swagger"
+    message = "New Retroswagger version 1.1.0 available for download. Check out the details at https://github.com/AdevintaSpain/Retroswagger @AdevintaEng #Kotlin #library #Android #AndroidDev #CodeGeneration #kotlinpoet #swagger"
 }
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.java.srcDirs
     classifier = 'sources'
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
 }
 
 artifacts {
