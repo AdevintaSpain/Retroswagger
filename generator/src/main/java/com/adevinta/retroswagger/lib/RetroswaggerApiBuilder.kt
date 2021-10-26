@@ -1,4 +1,4 @@
-package com.schibsted.spain.retroswagger.lib
+package com.adevinta.retroswagger.lib
 
 import com.google.gson.annotations.SerializedName
 import com.squareup.kotlinpoet.AnnotationSpec
@@ -44,7 +44,7 @@ import retrofit2.http.Query
 import java.io.FileNotFoundException
 import java.net.UnknownHostException
 
-private const val PACKAGE_PREFIX = "com.schibsted.retroswagger."
+private const val PACKAGE_PREFIX = "com.adevinta.retroswagger."
 
 class RetroswaggerApiBuilder(
     private val retroswaggerApiConfiguration: RetroswaggerApiConfiguration,

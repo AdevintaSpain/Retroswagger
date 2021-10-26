@@ -1,4 +1,4 @@
-package com.schibsted.spain.retroswagger.annotation
+package com.adevinta.retroswagger.annotation
 
 annotation class Retroswagger(
     val swaggerUrl: String,

@@ -1,10 +1,10 @@
-package com.schibsted.spain.retroswagger
+package com.adevinta.retroswagger
 
 import com.google.auto.service.AutoService
-import com.schibsted.spain.retroswagger.annotation.Retroswagger
-import com.schibsted.spain.retroswagger.lib.RetroswaggerApiBuilder
-import com.schibsted.spain.retroswagger.lib.RetroswaggerApiConfiguration
-import com.schibsted.spain.retroswagger.lib.RetroswaggerErrorTracking
+import com.adevinta.retroswagger.annotation.Retroswagger
+import com.adevinta.retroswagger.lib.RetroswaggerApiBuilder
+import com.adevinta.retroswagger.lib.RetroswaggerApiConfiguration
+import com.adevinta.retroswagger.lib.RetroswaggerErrorTracking
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.TypeSpec
 import okhttp3.OkHttpClient
@@ -132,7 +132,7 @@ class RetroswaggerGenerator : AbstractProcessor() {
     private fun downloadSwagger(swaggerUrl: String): InputStream? {
         val request = Request.Builder().url(swaggerUrl).build()
         val response = OkHttpClient().newCall(request).execute()
-        return response.body()?.byteStream()
+        return response.body?.byteStream()
     }
 
     private fun processKotlin(

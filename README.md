@@ -1,10 +1,10 @@
 <!--
   Title: Retroswagger - Kotlin code generator for Retrofit2 and RxJava2 based on Swagger
   Description: Retroswagger is a library that generates kotlin code for Retrofit 2 based on a Swagger endpoint. Includes an Annotation Processor to export and write the code.
-  Author: SchibstedSpain
+  Author: AdevintaSpain
   -->
 
-<img src="https://github.com/SchibstedSpain/Retroswagger/raw/master/media/retroswagger_logo.png" align="left" height="128px" />
+<img src="https://github.com/AdevintaSpain/Retroswagger/raw/master/media/retroswagger_logo.png" align="left" height="128px" />
 <img align="left" width="0" height="128px" hspace="10" />
 
 <div style="display:block; height: 168px;">
@@ -39,7 +39,7 @@ Include the **jcenter** repository in your top `build.gradle`:
 > Enabled by default on AndroidStudio projects
 ```groovy
 allprojects {
-    jcenter()
+    mavenCentral()
 }
 ```
 
@@ -50,9 +50,9 @@ apply plugin: "kotlin-kapt"
 ```
 
 ```groovy
-kapt "com.schibsted.spain:retroswagger:1.1.0"
-annotationProcessor "com.schibsted.spain:retroswagger:1.1.0"
-implementation "com.schibsted.spain:retroswagger:1.1.0"
+kapt "com.adevinta:retroswagger:1.1.0"
+annotationProcessor "com.adevinta:retroswagger:1.1.0"
+implementation "com.adevinta:retroswagger:1.1.0"
 ```
 
 In order for your project recognizes the generated code you will need to include it into your sources path, like this:
@@ -118,7 +118,7 @@ If you are using it on an Android project and you use Proguard, you will need to
 -dontwarn javax.xml.datatype.**
 -dontwarn com.fasterxml.jackson.**
 -dontwarn com.squareup.kotlinpoet.**
--dontwarn com.schibsted.spain.**
+-dontwarn com.adevinta.**
 ```
 
 Beware, if you are using one of these package maybe one or more of these rule will not be needed.
@@ -127,7 +127,7 @@ Also, it's possible that you will need to add more rules.
 If you are using using a test framework it will be needed to add a explicit dependency in order to use it on your tests
 
 ```groovy
-androidTestAnnotationProcessor "com.schibsted.spain:retroswagger:1.0.0"
+androidTestAnnotationProcessor "com.adevinta:retroswagger:1.0.0"
 ```
 
 
@@ -143,7 +143,7 @@ Contribute
 ----------
 
 1. Create an issue to discuss about your idea
-2. [Fork it] (https://github.com/SchibstedSpain/retroswagger/fork)
+2. [Fork it] (https://github.com/AdevintaSpain/retroswagger/fork)
 3. Create your feature branch (`git checkout -b my-new-feature`)
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
@@ -154,13 +154,13 @@ Contribute
 Bugs and Feedback
 -----------------
 
-For bugs, questions and discussions please use the [Github Issues](https://github.com/SchibstedSpain/retroswagger/issues).
+For bugs, questions and discussions please use the [Github Issues](https://github.com/AdevintaSpain/retroswagger/issues).
 
 
 License
 -------
 
-Copyright 2019 Schibsted Classified Media Spain S.L.
+Copyright 2021 Adevinta Spain S.L.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
