@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 31
     defaultConfig {
-        applicationId "com.schibsted.retroswagger"
+        applicationId "com.adevinta.retroswagger"
         minSdkVersion 16
         targetSdkVersion 31
         versionCode 1
@@ -55,9 +55,9 @@ dependencies {
     implementation project(":generator")
 
     /*def retroswaggerVersion = '1.0.0'
-    kapt "com.schibsted.spain:retroswagger:$retroswaggerVersion"
-    annotationProcessor "com.schibsted.spain:retroswagger:$retroswaggerVersion"
-    implementation "com.schibsted.spain:retroswagger:$retroswaggerVersion"*/
+    kapt "com.adevinta:retroswagger:$retroswaggerVersion"
+    annotationProcessor "com.adevinta:retroswagger:$retroswaggerVersion"
+    implementation "com.adevinta:retroswagger:$retroswaggerVersion"*/
 
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"

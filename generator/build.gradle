@@ -18,7 +18,7 @@ def versionMinor = Integer.parseInt(versionProps['MINOR'] as String)
 def versionPatch = Integer.parseInt(versionProps['PATCH'] as String)
 def buildVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
 
-group 'com.schibsted.spain'
+group 'com.adevinta'
 version buildVersion
 
 dependencies {

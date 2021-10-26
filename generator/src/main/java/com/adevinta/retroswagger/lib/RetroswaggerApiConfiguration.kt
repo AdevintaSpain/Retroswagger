@@ -1,4 +1,4 @@
-package com.adevinta.spain.retroswagger.lib
+package com.adevinta.retroswagger.lib
 
 data class RetroswaggerApiConfiguration(
     override val serviceEndpoint: String,
