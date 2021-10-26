@@ -50,11 +50,11 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    kapt project(":generator")
-    annotationProcessor project(":generator")
-    implementation project(":generator")
+    kapt project(':retroswagger')
+    annotationProcessor project(':retroswagger')
+    implementation project(':retroswagger')
 
-    /*def retroswaggerVersion = '1.0.0'
+    /*def retroswaggerVersion = '1.2.0'
     kapt "com.adevinta:retroswagger:$retroswaggerVersion"
     annotationProcessor "com.adevinta:retroswagger:$retroswaggerVersion"
     implementation "com.adevinta:retroswagger:$retroswaggerVersion"*/
