@@ -1,1 +1,1 @@
-include ':app', ':generator'
+include ':app', ':retroswagger'
